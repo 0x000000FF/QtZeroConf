@@ -45,32 +45,32 @@
 
 mainWindow::mainWindow()
 {
-	publishEnabled = 0;
+//	publishEnabled = 0;
 	buildGUI();
 
-	connect(&zeroConf, SIGNAL(serviceAdded(QZeroConfService *)), this, SLOT(addService(QZeroConfService *)));
-	connect(&zeroConf, SIGNAL(serviceRemoved(QZeroConfService *)), this, SLOT(removeService(QZeroConfService *)));
+    connect(&zeroConf, SIGNAL(serviceAdded(QZeroConfService *)), this, SLOT(addService(QZeroConfService *)));
+    connect(&zeroConf, SIGNAL(serviceRemoved(QZeroConfService *)), this, SLOT(removeService(QZeroConfService *)));
 
-	zeroConf.startBrowser("_qtzeroconf_test._tcp");
-	startPublish();
+    zeroConf.startBrowser("_http._tcp");
+//	startPublish();
 }
 
 void mainWindow::buildGUI()
 {
-	QPushButton *button;
+//	QPushButton *button;
 	QVBoxLayout *layout = new QVBoxLayout;
 
-	button = new QPushButton(tr(" Enable Publish "));
-	button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	layout->addWidget(button);
-	layout->setAlignment(button, Qt::AlignHCenter);
-	connect(button, SIGNAL(clicked()), this, SLOT(startPublish()));
+//	button = new QPushButton(tr(" Enable Publish "));
+//	button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+//	layout->addWidget(button);
+//	layout->setAlignment(button, Qt::AlignHCenter);
+//	connect(button, SIGNAL(clicked()), this, SLOT(startPublish()));
 
-	button = new QPushButton(tr(" Disable Publish "));
-	button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	layout->addWidget(button);
-	layout->setAlignment(button, Qt::AlignHCenter);
-	connect(button, SIGNAL(clicked()), this, SLOT(stopPublish()));
+//	button = new QPushButton(tr(" Disable Publish "));
+//	button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+//	layout->addWidget(button);
+//	layout->setAlignment(button, Qt::AlignHCenter);
+//	connect(button, SIGNAL(clicked()), this, SLOT(stopPublish()));
 
 	table.verticalHeader()->hide();
 	table.horizontalHeader()->hide();
@@ -100,24 +100,24 @@ QString mainWindow::buildName(void)
 
 // ---------- Service Publish ----------
 
-void mainWindow::startPublish()
-{
-	if (publishEnabled)
-		return;
-	publishEnabled = 1;
+//void mainWindow::startPublish()
+//{
+//	if (publishEnabled)
+//		return;
+//	publishEnabled = 1;
 
-	zeroConf.addServiceTxtRecord("Qt", "the best!");
-	zeroConf.addServiceTxtRecord("ZeroConf is nice too");
-	zeroConf.startServicePublish(buildName().toUtf8(), "_qtzeroconf_test._tcp", "local", 11437);
-}
+//	zeroConf.addServiceTxtRecord("Qt", "the best!");
+//	zeroConf.addServiceTxtRecord("ZeroConf is nice too");
+//	zeroConf.startServicePublish(buildName().toUtf8(), "_qtzeroconf_test._tcp", "local", 11437);
+//}
 
-void mainWindow::stopPublish()
-{
-	if (!publishEnabled)
-		return;
-	publishEnabled = 0;
-	zeroConf.stopServicePublish();
-}
+//void mainWindow::stopPublish()
+//{
+//	if (!publishEnabled)
+//		return;
+//	publishEnabled = 0;
+//	zeroConf.stopServicePublish();
+//}
 
 // ---------- Discovery Callbacks ----------
 
@@ -126,12 +126,17 @@ void mainWindow::addService(QZeroConfService *zcs)
 	qint32 row;
 	QTableWidgetItem *cell;
 
-	row = table.rowCount();
+    row = table.rowCount();
 	table.insertRow(row);
 	cell = new QTableWidgetItem(zcs->name);
 	table.setItem(row, 0, cell);
-	cell = new QTableWidgetItem(zcs->ip.toString());
+//    cell = new QTableWidgetItem(zcs->ip.toString());
+    cell = new QTableWidgetItem(zcs->host);
 	table.setItem(row, 1, cell);
+//    cell = new QTableWidgetItem(zcs->host);
+//    table.setItem(row, 2, cell);
+//    qDebug()<<zcs->host;
+//    qDebug()<<zcs->domain;
 	table.resizeColumnsToContents();
 	#if !(defined(Q_OS_IOS) || defined(Q_OS_ANDROID))
 	setFixedSize(table.horizontalHeader()->length() + 60, table.verticalHeader()->length() + 100);
@@ -141,7 +146,7 @@ void mainWindow::addService(QZeroConfService *zcs)
 void mainWindow::removeService(QZeroConfService *zcs)
 {
 	qint32 i, row;
-	QTableWidgetItem *nameItem, *ipItem;
+    QTableWidgetItem *nameItem, *ipItem;
 
 	QList <QTableWidgetItem*> search = table.findItems(zcs->name, Qt::MatchExactly);
 	for (i=0; i<search.size(); i++) {

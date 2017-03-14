@@ -30,17 +30,17 @@
 #include <QObject>
 #include <QHostAddress>
 #include <QMap>
-#include <QtCore/QtGlobal>
+//#include <QtCore/QtGlobal>
 
-#ifndef QT_STATIC
-#	ifdef QT_BUILD_ZEROCONF_LIB
-#		define Q_ZEROCONF_EXPORT Q_DECL_EXPORT
-#	else
-#		define Q_ZEROCONF_EXPORT Q_DECL_IMPORT
-#	endif
-#else
-#	define Q_ZEROCONF_EXPORT
-#endif
+//#ifndef QT_STATIC
+//#	ifdef QT_BUILD_ZEROCONF_LIB
+//#		define Q_ZEROCONF_EXPORT Q_DECL_EXPORT
+//#	else
+//#		define Q_ZEROCONF_EXPORT Q_DECL_IMPORT
+//#	endif
+//#else
+//#	define Q_ZEROCONF_EXPORT
+//#endif
 
 struct QZeroConfService
 {
@@ -56,7 +56,8 @@ struct QZeroConfService
 
 class QZeroConfPrivate;
 
-class Q_ZEROCONF_EXPORT QZeroConf : public QObject
+//class Q_ZEROCONF_EXPORT QZeroConf : public QObject
+class QZeroConf : public QObject
 {
 	Q_OBJECT
 

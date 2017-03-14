@@ -189,6 +189,8 @@ void DNSSD_API QZeroConfPrivate::addressReply(DNSServiceRef sdRef,
 			else
 				ref->newService->ip = hAddress;
 
+            ref->newService->host = hostName;
+
 			QString key = ref->newService->name + QString::number(interfaceIndex);
 			if (!ref->pub->services.contains(key)) {
 				ref->pub->services.insert(key, ref->newService);

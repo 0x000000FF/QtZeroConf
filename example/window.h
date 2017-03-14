@@ -43,13 +43,13 @@ private:
 	QString buildName(void);
 	QTableWidget table;
 	QZeroConf zeroConf;
-	bool publishEnabled;
+//	bool publishEnabled;
 
 private slots:
-	void startPublish();
-	void stopPublish();
-	void addService(QZeroConfService *item);
-	void removeService(QZeroConfService *item);
+//	void startPublish();
+//	void stopPublish();
+    void addService(QZeroConfService *item);
+    void removeService(QZeroConfService *item);
 };
 
 #endif /* WINDOW_H_ */
